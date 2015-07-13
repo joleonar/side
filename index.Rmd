@@ -1,0 +1,66 @@
+---
+title       : Developing Data Products
+subtitle    : App Presentation
+author      : Leonardo Alvarado
+job         : 
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+widgets     : []            # {mathjax, quiz, bootstrap}
+mode        : selfcontained # {standalone, draft}
+knit        : slidify::knit2slides
+---
+
+## Introduction
+The app was designed for plotting two different histograms: 
+
+1. Number of seismic events per year 
+
+2. Number of seismic events per magnitud,
+
+The information about earthquakes was provided by FUNVISIS (Fundación Venezolana de Investigaciones Sismológicas), the database contain seismic events from 2000 to 2010 occurred in the region of Venezuela between latitude 5 to 14ºN and longitude 58 to 74ºW.
+
+--- .class #id 
+
+## The data
+Each event has the following information: 
+* Origin time of the event : Year, Month, Day, hour, minute,seconds
+* Localization: Latitude, Longitude, Depth
+* Magnitude
+
+Part of the data is: 
+```{r, echo=FALSE}
+load("../datos.RData")
+rownames(datos) <- NULL
+head(datos[,1:10],5)
+```
+
+--- .class #id 
+## Results of the App
+With this app you can plot two type of histogram:   
+
+* Number of seismic events per year
+
+```{r, echo=FALSE, fig.height=4}
+library(ggplot2)		  
+	gg <- ggplot(datos, aes(x=Year)) + geom_histogram(binwidth=1,colour="black",fill="blue") +
+	  	ylab("Count") + theme(axis.text.x = element_text(angle = 0, hjust = 1,size=12,colour="black"),
+        axis.title=element_text(size=12,face="bold"), axis.text.y = element_text(hjust = 1,size=12,colour="black"))  
+   print(gg)
+```
+
+In this plot you can see that seismic activity is increasing from 2000 to 2010, this is because the number of seismological station are increased too.
+
+--- .class #id 
+## Results of the App (cont)
+* Number of seismic events per magnitude
+
+```{r,echo=FALSE,fig.height=4}
+library(ggplot2)		  
+	gg <- ggplot(datos, aes(x=Magnitude)) + geom_histogram(binwidth=1,colour="black",fill="blue") +
+	  	ylab("Count") + theme(axis.text.x = element_text(angle = 0, hjust = 1,size=12,colour="black"),
+        axis.title=element_text(size=12,face="bold"), axis.text.y = element_text(hjust = 1,size=12,colour="black"))  
+   print(gg)
+```
+
+In this plot you can see that the mayority of the magnitudes are between 2 and 3.
